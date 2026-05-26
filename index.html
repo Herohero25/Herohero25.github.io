@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undangan Pernikahan — Airlangga & Siti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@200;300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS VARIABLES — BLUSH PINK PALETTE
+   ============================================================ */
+:root {
+  --blush:        #E8A4A4;
+  --blush-deep:   #D4737A;
+  --blush-soft:   #F0C5C5;
+  --blush-pale:   #FAE8E8;
+  --blush-mist:   #FDF3F3;
+  --ivory:        #FDFAF8;
+  --ivory-warm:   #F9F4EF;
+  --sand:         #E8D5C4;
+  --taupe:        #7A5C58;
+  --taupe-light:  #A8827E;
+  --taupe-pale:   #C4A4A0;
+  --gold:         #BFA080;
+  --gold-light:   #D4BC9C;
+  --charcoal:     #2C1F1E;
+  --text-body:    #5C3D3A;
+  --text-soft:    #9C7470;
+  --border:       rgba(232,164,164,0.28);
+  --border-soft:  rgba(212,115,122,0.18);
+  --shadow:       rgba(124,92,88,0.12);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ivory);
+  color: var(--charcoal);
+  overflow-x: hidden;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+button { cursor: pointer; }
+
+/* ============================================================
+   LOADING SCREEN
+   ============================================================ */
+#loading {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--ivory);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+#loading.out { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.ld-petals {
+  position: absolute; inset: 0;
+  overflow: hidden; pointer-events: none;
+}
+.ld-petal {
+  position: absolute;
+  border-radius: 50% 0 50% 0;
+  background: var(--blush-pale);
+  opacity: 0;
+  animation: ldPetalIn 1.6s ease forwards;
+}
+@keyframes ldPetalIn {
+  0%   { opacity: 0; transform: scale(0) rotate(0deg); }
+  60%  { opacity: 0.6; }
+  100% { opacity: 0.25; transform: scale(1) rotate(45deg); }
+}
+
+.ld-monogram {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(80px, 18vw, 140px);
+  color: var(--blush-deep);
+  line-height: 1;
+  animation: ldName 1s ease-out 0.3s both;
+  position: relative;
+}
+.ld-monogram::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 1px;
+  background: var(--blush);
+  animation: ldLine 0.8s ease 1s forwards;
+}
+@keyframes ldLine { to { width: 80%; } }
+@keyframes ldName {
+  from { opacity: 0; transform: translateY(20px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ld-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--taupe-light);
+  margin-top: 20px;
+  animation: ldFade 0.8s ease 1.2s both;
+}
+@keyframes ldFade { from { opacity: 0; } to { opacity: 1; } }
+
+.ld-bar-wrap {
+  width: 100px; height: 1px;
+  background: var(--blush-pale);
+  margin-top: 24px;
+  overflow: hidden;
+  animation: ldFade 0.5s ease 1s both;
+}
+.ld-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--blush-soft), var(--blush-deep));
+  animation: ldProgress 1.8s cubic-bezier(0.4,0,0.2,1) 1s forwards;
+}
+@keyframes ldProgress { to { width: 100%; } }
+
+/* ============================================================
+   ENVELOPE SCREEN
+   ============================================================ */
+#envelope-screen {
+  position: fixed; inset: 0; z-index: 8000;
+  background: var(--ivory-warm);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+#envelope-screen.out { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.env-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--blush-pale) 0%, transparent 70%);
+  pointer-events: none;
+}
+.env-bg-circle:nth-child(1) { width: 600px; height: 600px; top: -200px; left: -200px; opacity: 0.5; }
+.env-bg-circle:nth-child(2) { width: 400px; height: 400px; bottom: -150px; right: -100px; opacity: 0.4; }
+
+.env-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 28px;
+  text-align: center; padding: 24px;
+}
+
+.env-to {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--taupe-pale);
+  animation: ldFade 0.8s ease 0.5s both;
+}
+
+.env-names-small {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(14px, 3.5vw, 20px);
+  color: var(--taupe);
+  letter-spacing: 1px;
+  animation: ldFade 0.8s ease 0.7s both;
+  margin-top: -10px;
+}
+
+.env-svg-wrap {
+  position: relative;
+  animation: envFloat 3s ease-in-out infinite;
+  cursor: pointer;
+}
+@keyframes envFloat {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+.env-svg { width: min(260px, 72vw); filter: drop-shadow(0 16px 40px rgba(212,115,122,0.18)); }
+
+.env-flap-group {
+  transform-origin: 50% 0;
+  transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+.env-svg-wrap.opened .env-flap-group { transform: rotateX(180deg); }
+
+.env-cta {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 14px;
+  animation: envCta 1s ease 1s both;
+}
+@keyframes envCta { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+.env-pulse-text {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--taupe-light);
+  animation: envPulse 2s ease-in-out infinite;
+}
+@keyframes envPulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+.env-open-btn {
+  background: var(--blush-deep);
+  color: #fff;
+  border: none;
+  padding: 15px 44px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  border-radius: 40px;
+  transition: background 0.3s, transform 0.25s, box-shadow 0.3s;
+  box-shadow: 0 8px 28px rgba(212,115,122,0.35);
+}
+.env-open-btn:hover {
+  background: var(--taupe);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(122,92,88,0.3);
+}
+
+/* ============================================================
+   MUSIC BUTTON
+   ============================================================ */
+#music-btn {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 700;
+  width: 52px; height: 52px;
+  background: var(--blush-deep);
+  border: none;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(212,115,122,0.4);
+  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+}
+#music-btn:hover { transform: scale(1.12); background: var(--taupe); }
+#music-btn svg { width: 22px; height: 22px; fill: #fff; }
+#music-btn.spinning { animation: musicSpin 5s linear infinite; }
+@keyframes musicSpin { to { transform: rotate(360deg); } }
+#music-btn.spinning:hover { animation-play-state: paused; transform: scale(1.12); }
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.sr { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+.sr.up { opacity: 1; transform: translateY(0); }
+.sr-l { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+.sr-l.up { opacity: 1; transform: translateX(0); }
+.sr-r { opacity: 0; transform: translateX(40px); transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+.sr-r.up { opacity: 1; transform: translateX(0); }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.22s; }
+.d3 { transition-delay: 0.36s; }
+.d4 { transition-delay: 0.52s; }
+.d5 { transition-delay: 0.68s; }
+
+/* ============================================================
+   COMMON COMPONENTS
+   ============================================================ */
+.section-eyebrow {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--blush-deep);
+  margin-bottom: 12px;
+}
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(30px, 6vw, 50px);
+  color: var(--charcoal);
+  line-height: 1.15;
+}
+.section-heading em { font-style: italic; color: var(--blush-deep); }
+.section-rule {
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blush), transparent);
+  margin: 18px auto 0;
+}
+.section-header { text-align: center; margin-bottom: 52px; }
+
+.ornament-line {
+  display: flex; align-items: center; gap: 14px;
+  justify-content: center;
+  margin: 10px 0;
+}
+.ornament-line::before, .ornament-line::after {
+  content: '';
+  flex: 1; max-width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blush-soft), transparent);
+}
+.ornament-line .gem {
+  font-family: 'Pinyon Script', cursive;
+  font-size: 30px;
+  color: var(--blush);
+  line-height: 1;
+}
+
+/* ============================================================
+   SECTION WRAPPER
+   ============================================================ */
+.section-wrap {
+  padding: 88px 24px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.full-section { padding: 88px 0; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--ivory);
+}
+
+/* Geometric blush blobs */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(60px);
+}
+.hero-blob-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(240,197,197,0.5) 0%, transparent 70%);
+  top: -120px; right: -100px;
+  animation: blobDrift 8s ease-in-out infinite;
+}
+.hero-blob-2 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(232,164,164,0.3) 0%, transparent 70%);
+  bottom: 80px; left: -80px;
+  animation: blobDrift 10s ease-in-out 2s infinite reverse;
+}
+@keyframes blobDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(20px,-20px) scale(1.05); }
+}
+
+/* Corner florals (CSS art) */
+.hero-floral {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.18;
+}
+.hero-floral-tl { top: 0; left: 0; }
+.hero-floral-br { bottom: 0; right: 0; transform: rotate(180deg); }
+
+.hero-inner {
+  position: relative; z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px 40px;
+  gap: 0;
+}
+
+.hero-bismillah {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(13px, 2.5vw, 16px);
+  color: var(--taupe-light);
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: heroIn 1s 0.4s both;
+}
+
+.hero-invite-label {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 7px;
+  text-transform: uppercase;
+  color: var(--taupe-pale);
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: heroIn 1s 0.6s both;
+}
+
+.hero-names-script {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(68px, 18vw, 136px);
+  color: var(--blush-deep);
+  line-height: 0.95;
+  opacity: 0;
+  animation: heroIn 1.2s 0.8s both;
+}
+
+.hero-amp {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(13px, 2.5vw, 18px);
+  letter-spacing: 8px;
+  color: var(--taupe-light);
+  font-weight: 300;
+  margin: 4px 0 2px;
+}
+
+.hero-full-names {
+  margin-top: 22px;
+  opacity: 0;
+  animation: heroIn 1s 1.1s both;
+}
+.hero-full-name-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.hero-full-name-row:last-child { border-bottom: 1px solid var(--border); }
+.hero-fn-label {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--taupe-pale);
+}
+.hero-fn-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(15px, 3.5vw, 22px);
+  color: var(--charcoal);
+  letter-spacing: 0.5px;
+}
+
+.hero-photo-frame {
+  position: relative;
+  margin-top: 36px;
+  opacity: 0;
+  animation: heroIn 1.2s 1.3s both;
+}
+.hero-photo-ring {
+  width: min(300px, 80vw);
+  aspect-ratio: 3/4;
+  border-radius: 150px 150px 12px 12px;
+  overflow: hidden;
+  background: var(--blush-pale);
+  box-shadow:
+    0 0 0 8px var(--ivory),
+    0 0 0 9px var(--blush-soft),
+    0 28px 72px rgba(212,115,122,0.2);
+  position: relative;
+}
+.hero-photo-ring img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 8s ease;
+}
+.hero-photo-ring:hover img { transform: scale(1.04); }
+
+/* Decorative corner badges */
+.hero-badge {
+  position: absolute;
+  font-family: 'Pinyon Script', cursive;
+  font-size: 22px;
+  color: var(--blush-deep);
+  opacity: 0.7;
+}
+.hero-badge-tl { top: -18px; left: -18px; }
+.hero-badge-br { bottom: -18px; right: -18px; }
+
+.hero-date-pill {
+  margin-top: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 30px;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 60px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--taupe);
+  opacity: 0;
+  animation: heroIn 1s 1.5s both;
+  box-shadow: 0 4px 24px rgba(212,115,122,0.12);
+}
+.hero-date-pill .pip {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--blush);
+  flex-shrink: 0;
+}
+
+.hero-scroll {
+  position: relative; z-index: 2;
+  padding-bottom: 36px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+  opacity: 0;
+  animation: heroIn 1s 2s both;
+}
+.hero-scroll span {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--taupe-pale);
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: var(--blush-soft);
+  position: relative; overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%; left: 0;
+  width: 100%; height: 100%;
+  background: var(--blush);
+  animation: scrollSlide 2s ease-in-out infinite;
+}
+@keyframes scrollSlide {
+  0%   { top: -100%; }
+  100% { top: 100%; }
+}
+
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   COUNTDOWN
+   ============================================================ */
+#countdown {
+  background: linear-gradient(135deg, var(--blush-deep) 0%, #C25A62 50%, var(--taupe) 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 72px 24px;
+  text-align: center;
+}
+#countdown::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+#countdown::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 10% 50%, rgba(255,255,255,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 50%, rgba(0,0,0,0.15) 0%, transparent 60%);
+}
+.cd-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+.cd-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+  display: block;
+}
+.cd-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(22px, 5vw, 38px);
+  color: rgba(255,255,255,0.95);
+  font-weight: 400;
+  margin-bottom: 48px;
+}
+.cd-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(12px, 4vw, 32px);
+  flex-wrap: wrap;
+}
+.cd-unit {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+}
+.cd-num-wrap {
+  position: relative;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  padding: clamp(14px, 3vw, 20px) clamp(16px, 4vw, 28px);
+  min-width: clamp(68px, 16vw, 96px);
+  text-align: center;
+}
+.cd-num {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-size: clamp(36px, 10vw, 68px);
+  color: #fff;
+  line-height: 1;
+  display: block;
+}
+.cd-colon {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 7vw, 50px);
+  color: rgba(255,255,255,0.35);
+  line-height: 1;
+  padding-top: clamp(18px, 4vw, 26px);
+  align-self: flex-start;
+}
+.cd-lbl {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+.cd-done {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(40px, 9vw, 70px);
+  color: #fff;
+  display: none;
+  padding: 20px;
+}
+
+/* ============================================================
+   LOVE STORY
+   ============================================================ */
+#story { background: var(--ivory-warm); }
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  position: relative;
+}
+/* Vertical connecting line */
+.story-grid::before {
+  content: '';
+  position: absolute;
+  left: 28px; top: 56px; bottom: 56px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--blush-soft) 20%, var(--blush-soft) 80%, transparent);
+}
+@media (min-width: 620px) {
+  .story-grid::before { left: 50%; }
+}
+
+.story-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 28px 24px;
+  background: var(--ivory);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  box-shadow: 0 2px 20px var(--shadow);
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.story-item:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(124,92,88,0.12); }
+
+.story-dot {
+  flex-shrink: 0;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blush-pale), var(--blush-soft));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 0 0 4px var(--ivory), 0 0 0 5px var(--blush-soft);
+}
+.story-year-tag {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--blush-deep);
+  margin-bottom: 6px;
+}
+.story-body {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(14px, 2.8vw, 17px);
+  color: var(--taupe);
+  line-height: 1.9;
+}
+
+/* ============================================================
+   EVENT DETAILS
+   ============================================================ */
+#events { background: var(--ivory); }
+
+.events-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 600px) {
+  .events-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.event-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 28px var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.event-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(124,92,88,0.15); }
+
+/* Decorative corner cuts */
+.event-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blush-soft), var(--blush-deep), var(--blush-soft));
+}
+.event-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: -60px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--blush-pale) 0%, transparent 70%);
+}
+
+.event-icon-wrap {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--blush-mist);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  margin: 0 auto 16px;
+}
+.event-type-tag {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--blush-deep);
+  display: block;
+  margin-bottom: 8px;
+}
+.event-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(22px, 5vw, 30px);
+  color: var(--charcoal);
+  margin-bottom: 24px;
+}
+.event-info-list { list-style: none; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.event-info-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-body);
+  line-height: 1.65;
+}
+.ev-icon {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--blush-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  margin-top: 1px;
+}
+
+/* ============================================================
+   MAP SECTION
+   ============================================================ */
+#map-section { background: var(--ivory-warm); }
+.map-header-wrap {
+  max-width: 820px; margin: 0 auto;
+  padding: 88px 24px 40px;
+  text-align: center;
+}
+.map-embed-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(300px, 50vw, 460px);
+}
+.map-embed-wrap iframe {
+  width: 100%; height: 100%;
+  border: none; display: block;
+  filter: saturate(0.7) sepia(0.15) contrast(1.05);
+}
+.map-cta-btn {
+  position: absolute;
+  bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--blush-deep);
+  color: #fff;
+  padding: 13px 32px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 40px;
+  white-space: nowrap;
+  box-shadow: 0 6px 24px rgba(212,115,122,0.45);
+  transition: background 0.3s, transform 0.25s;
+}
+.map-cta-btn:hover { background: var(--taupe); transform: translateX(-50%) translateY(-3px); }
+
+/* ============================================================
+   RSVP
+   ============================================================ */
+#rsvp {
+  background: linear-gradient(170deg, var(--blush-mist) 0%, var(--ivory-warm) 60%, var(--ivory) 100%);
+}
+.rsvp-card {
+  max-width: 560px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 40px 32px;
+  box-shadow: 0 8px 48px rgba(124,92,88,0.08);
+}
+@media (max-width: 480px) { .rsvp-card { padding: 28px 20px; } }
+
+.form-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 440px) { .form-row2 { grid-template-columns: 1fr; } }
+
+.form-group { display: flex; flex-direction: column; gap: 7px; }
+.form-label {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--taupe-light);
+}
+.form-control {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--charcoal);
+  outline: none;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  -webkit-appearance: none;
+}
+.form-control:focus {
+  border-color: var(--blush);
+  box-shadow: 0 0 0 3px rgba(232,164,164,0.15);
+}
+.form-control::placeholder { color: var(--taupe-pale); }
+textarea.form-control { resize: vertical; min-height: 88px; }
+
+.attend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.attend-chip {
+  padding: 13px 10px;
+  border: 1px solid var(--border);
+  background: var(--ivory);
+  border-radius: 40px;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--text-soft);
+  transition: all 0.25s;
+  user-select: none;
+}
+.attend-chip.on {
+  background: var(--blush-deep);
+  border-color: var(--blush-deep);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(212,115,122,0.35);
+}
+
+.btn-primary {
+  background: var(--blush-deep);
+  color: #fff;
+  border: none;
+  padding: 16px 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  border-radius: 40px;
+  transition: background 0.3s, transform 0.25s, box-shadow 0.3s;
+  box-shadow: 0 6px 24px rgba(212,115,122,0.3);
+  width: 100%;
+}
+.btn-primary:hover { background: var(--taupe); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(122,92,88,0.25); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.55; cursor: default; transform: none; }
+
+.rsvp-thank {
+  text-align: center; padding: 32px 16px; display: none;
+}
+.rsvp-thank .ty-icon { font-size: 52px; margin-bottom: 14px; display: block; }
+.rsvp-thank p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--taupe);
+  margin-bottom: 8px;
+}
+.rsvp-thank small {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   GIFT / AMPLOP DIGITAL
+   ============================================================ */
+#gift { background: var(--ivory); }
+.gift-note {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(14px, 2.8vw, 17px);
+  color: var(--taupe);
+  line-height: 1.9;
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto 44px;
+}
+.gift-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+@media (min-width: 520px) { .gift-cards-grid { grid-template-columns: 1fr 1fr; } }
+
+.gift-card {
+  background: linear-gradient(145deg, var(--ivory), var(--ivory-warm));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: 0 4px 24px var(--shadow);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.gift-card:hover { transform: translateY(-5px); box-shadow: 0 14px 44px rgba(124,92,88,0.14); }
+.gift-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blush-soft), var(--blush-deep), var(--blush-soft));
+}
+.gift-bank-logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--blush-deep);
+  margin-bottom: 6px;
+}
+.gift-acc-num {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--charcoal);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  user-select: all;
+}
+.gift-acc-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--text-soft);
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+.copy-gift-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 22px;
+  background: var(--blush-mist);
+  border: 1px solid var(--blush-soft);
+  border-radius: 40px;
+  color: var(--blush-deep);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.copy-gift-btn:hover { background: var(--blush-deep); color: #fff; border-color: var(--blush-deep); }
+.copy-toast {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: var(--taupe);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+.copy-toast.show { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   WISHES
+   ============================================================ */
+#wishes { background: var(--ivory-warm); }
+.wishes-lead {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(14px, 2.8vw, 17px);
+  color: var(--taupe);
+  line-height: 1.9;
+  text-align: center;
+  max-width: 460px;
+  margin: 0 auto 44px;
+}
+.wish-form-wrap {
+  max-width: 560px;
+  margin: 0 auto 48px;
+  display: flex; flex-direction: column;
+  gap: 14px;
+}
+.wish-form-wrap input,
+.wish-form-wrap textarea {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  padding: 13px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--charcoal);
+  outline: none;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 100%;
+}
+.wish-form-wrap input:focus,
+.wish-form-wrap textarea:focus {
+  border-color: var(--blush);
+  box-shadow: 0 0 0 3px rgba(232,164,164,0.14);
+}
+.wish-form-wrap input::placeholder,
+.wish-form-wrap textarea::placeholder { color: var(--taupe-pale); }
+.wish-form-wrap textarea { min-height: 100px; resize: vertical; }
+
+.wishes-feed {
+  max-width: 660px;
+  margin: 0 auto;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--blush-soft) transparent;
+}
+.wishes-feed::-webkit-scrollbar { width: 4px; }
+.wishes-feed::-webkit-scrollbar-thumb { background: var(--blush-soft); border-radius: 4px; }
+
+.wish-item {
+  background: var(--ivory);
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 14px var(--shadow);
+  animation: wishIn 0.5s ease;
+}
+@keyframes wishIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+.wish-meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.wish-ava {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blush-pale), var(--blush-soft));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--blush-deep);
+  flex-shrink: 0;
+}
+.wish-author {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--charcoal);
+}
+.wish-ts {
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--taupe-pale);
+  margin-left: auto;
+  white-space: nowrap;
+}
+.wish-msg {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--taupe);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--charcoal);
+  padding: 72px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+footer::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 110%, rgba(232,164,164,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 20% 20%, rgba(212,115,122,0.08) 0%, transparent 50%);
+}
+.footer-inner { position: relative; z-index: 2; }
+.footer-names-big {
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(52px, 14vw, 100px);
+  color: var(--blush-soft);
+  line-height: 1;
+  margin-bottom: 24px;
+}
+.footer-ayat {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(13px, 2.5vw, 15px);
+  color: rgba(240,197,197,0.6);
+  max-width: 440px;
+  margin: 0 auto 28px;
+  line-height: 2;
+}
+.footer-date-line {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(240,197,197,0.45);
+  margin-top: 24px;
+}
+.footer-credit {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(240,197,197,0.25);
+  margin-top: 40px;
+}
+
+/* ============================================================
+   FLOATING PETALS
+   ============================================================ */
+.petal-field {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 1;
+  overflow: hidden;
+}
+.fp {
+  position: absolute;
+  border-radius: 50% 0 50% 0;
+  background: rgba(232,164,164,0.3);
+  animation: fpFall linear infinite;
+}
+@keyframes fpFall {
+  0%   { transform: translate(0,-20px) rotate(0deg);        opacity: 0.9; }
+  100% { transform: translate(var(--dx),110vh) rotate(420deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING PETALS -->
+<div class="petal-field" id="petalField"></div>
+
+<!-- ===================== LOADING ===================== -->
+<div id="loading">
+  <div class="ld-petals" id="ldPetals"></div>
+  <div class="ld-monogram">A &amp; S</div>
+  <div class="ld-subtitle">Airlangga &amp; Siti — Wedding Invitation</div>
+  <div class="ld-bar-wrap"><div class="ld-bar"></div></div>
+</div>
+
+<!-- ===================== ENVELOPE ===================== -->
+<div id="envelope-screen">
+  <div class="env-bg-circle"></div>
+  <div class="env-bg-circle"></div>
+  <div class="env-content">
+    <p class="env-to">Kepada Yth.</p>
+    <p class="env-names-small">Tamu Undangan yang Terhormat</p>
+
+    <div class="env-svg-wrap" id="envWrap">
+      <svg class="env-svg" viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body -->
+        <rect x="6" y="42" width="268" height="132" rx="6" fill="#FFF5F5" stroke="#F0C5C5" stroke-width="1.5"/>
+        <!-- Bottom fold lines -->
+        <line x1="6" y1="174" x2="140" y2="108" stroke="#F0C5C5" stroke-width="1"/>
+        <line x1="274" y1="174" x2="140" y2="108" stroke="#F0C5C5" stroke-width="1"/>
+        <!-- Side folds -->
+        <line x1="6" y1="42" x2="80" y2="108" stroke="#F0C5C5" stroke-width="1"/>
+        <line x1="274" y1="42" x2="200" y2="108" stroke="#F0C5C5" stroke-width="1"/>
+        <!-- Flap group -->
+        <g class="env-flap-group">
+          <polygon points="6,42 140,126 274,42" fill="#EDD8D8" stroke="#E8A4A4" stroke-width="1.5" stroke-linejoin="round"/>
+        </g>
+        <!-- Wax seal -->
+        <circle cx="140" cy="108" r="22" fill="#D4737A"/>
+        <circle cx="140" cy="108" r="19" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+        <text x="140" y="115" text-anchor="middle"
+              font-family="Pinyon Script, cursive" font-size="20" fill="#fff">A</text>
+      </svg>
+    </div>
+
+    <div class="env-cta">
+      <p class="env-pulse-text">Ketuk untuk membuka undangan</p>
+      <button class="env-open-btn" id="envOpenBtn">✦ Buka Undangan</button>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIO -->
+<audio id="bgAudio" loop preload="none">
+  <source src="https://lh3.googleusercontent.com/d/1RXHj5w0yQsDg7LcH83PGGRREWALvFnv9" type="audio/mpeg">
+</audio>
+
+<!-- MUSIC BUTTON -->
+<button id="music-btn" title="Musik">
+  <svg id="icPlay" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+  <svg id="icPause" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+</button>
+
+<!-- ===================== HERO ===================== -->
+<section id="hero">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+
+  <!-- Floral corners (SVG) -->
+  <svg class="hero-floral hero-floral-tl" width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#D4737A" stroke-width="1" fill="none" opacity="0.8">
+      <path d="M10,10 Q50,0 90,30 Q50,60 10,90 Q0,50 10,10Z" fill="rgba(240,197,197,0.4)"/>
+      <path d="M30,10 Q70,20 80,60 Q40,70 10,50 Q20,20 30,10Z" fill="rgba(232,164,164,0.3)"/>
+      <circle cx="10" cy="10" r="4" fill="#D4737A" opacity="0.5"/>
+      <circle cx="50" cy="30" r="3" fill="#E8A4A4" opacity="0.5"/>
+      <circle cx="30" cy="60" r="2" fill="#D4737A" opacity="0.4"/>
+      <line x1="0" y1="0" x2="80" y2="0" stroke-width="0.5"/>
+      <line x1="0" y1="0" x2="0" y2="80" stroke-width="0.5"/>
+    </g>
+  </svg>
+  <svg class="hero-floral hero-floral-br" width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#D4737A" stroke-width="1" fill="none" opacity="0.8">
+      <path d="M10,10 Q50,0 90,30 Q50,60 10,90 Q0,50 10,10Z" fill="rgba(240,197,197,0.4)"/>
+      <path d="M30,10 Q70,20 80,60 Q40,70 10,50 Q20,20 30,10Z" fill="rgba(232,164,164,0.3)"/>
+      <circle cx="10" cy="10" r="4" fill="#D4737A" opacity="0.5"/>
+      <circle cx="50" cy="30" r="3" fill="#E8A4A4" opacity="0.5"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <p class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+    <p class="hero-invite-label">Kami mengundang Anda dalam perayaan</p>
+
+    <div class="hero-names-script">
+      Airlangga
+      <span class="hero-amp">— dan —</span>
+      Siti
+    </div>
+
+    <div class="hero-full-names">
+      <div class="hero-full-name-row">
+        <span class="hero-fn-label">Pengantin Pria</span>
+        <span class="hero-fn-name">Airlangga Rahmadan Nurbianto Putra</span>
+      </div>
+      <div class="hero-full-name-row">
+        <span class="hero-fn-label">Pengantin Wanita</span>
+        <span class="hero-fn-name">Siti Rhohana</span>
+      </div>
+    </div>
+
+    <div class="hero-photo-frame">
+      <div class="hero-photo-ring">
+        <img
+          src="https://lh3.googleusercontent.com/d/1emIzpkWpehJNGozNE3dYFPfIz-0pBsNL"
+          alt="Foto Airlangga & Siti"
+          loading="eager"
+          onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#FAE8E8,#F0C5C5);flex-direction:column;gap:10px\'><span style=\'font-size:48px\'>🌸</span><p style=\'font-family:DM Sans,sans-serif;font-size:11px;color:#A8827E;letter-spacing:2px;text-align:center;padding:0 20px\'>Foto Pasangan</p></div>'"
+        >
+      </div>
+      <span class="hero-badge hero-badge-tl">✦</span>
+      <span class="hero-badge hero-badge-br">✦</span>
+    </div>
+
+    <div class="hero-date-pill">
+      <span>Jumat</span>
+      <div class="pip"></div>
+      <span>29 Mei 2026</span>
+      <div class="pip"></div>
+      <span>Masjid At'taqwa</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ===================== COUNTDOWN ===================== -->
+<section id="countdown">
+  <div class="cd-inner sr">
+    <span class="cd-eyebrow">Menghitung Hari</span>
+    <p class="cd-title">Menuju Hari yang Dinantikan</p>
+    <div class="cd-grid" id="cdGrid">
+      <div class="cd-unit">
+        <div class="cd-num-wrap"><span class="cd-num" id="cdD">--</span></div>
+        <span class="cd-lbl">Hari</span>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-unit">
+        <div class="cd-num-wrap"><span class="cd-num" id="cdH">--</span></div>
+        <span class="cd-lbl">Jam</span>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-unit">
+        <div class="cd-num-wrap"><span class="cd-num" id="cdM">--</span></div>
+        <span class="cd-lbl">Menit</span>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-unit">
+        <div class="cd-num-wrap"><span class="cd-num" id="cdS">--</span></div>
+        <span class="cd-lbl">Detik</span>
+      </div>
+    </div>
+    <div class="cd-done" id="cdDone">Hari Bahagia Telah Tiba ✦</div>
+  </div>
+</section>
+
+<!-- ===================== LOVE STORY ===================== -->
+<section id="story">
+  <div class="section-wrap">
+    <div class="section-header sr">
+      <span class="section-eyebrow">Our Love Story</span>
+      <h2 class="section-heading">Kisah <em>Cinta Kita</em></h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="story-grid">
+      <div class="story-item sr d1">
+        <div class="story-dot">🎓</div>
+        <div>
+          <span class="story-year-tag">2022 — Pertemuan Pertama</span>
+          <p class="story-body">
+            Takdir Allah mempertemukan kami di bangku kuliah PPG tahun 2022. 
+            Dari sekadar teman sekelas, perlahan hadir rasa yang tumbuh diam-diam 
+            di antara setiap diskusi, senyum, dan momen bersama yang sederhana namun begitu bermakna.
+          </p>
+        </div>
+      </div>
+      <div class="story-item sr d2">
+        <div class="story-dot">💌</div>
+        <div>
+          <span class="story-year-tag">2025 — Mempertegas Niat</span>
+          <p class="story-body">
+            Setelah melewati berbagai perjalanan dan membulatkan tekad, 
+            kami memilih untuk melangkah lebih jauh — membangun mahligai rumah tangga 
+            yang insyaAllah dipenuhi berkah, cinta, dan ketenangan.
+          </p>
+        </div>
+      </div>
+      <div class="story-item sr d3">
+        <div class="story-dot">🕌</div>
+        <div>
+          <span class="story-year-tag">29 Mei 2026 — Hari Pernikahan</span>
+          <p class="story-body">
+            Dengan izin Allah dan restu kedua orang tua, kami mempersilahkan 
+            keluarga dan sahabat tercinta untuk menyaksikan dan mendoakan langkah awal 
+            perjalanan kami bersama menuju sakinah mawaddah warahmah.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EVENTS ===================== -->
+<section id="events">
+  <div class="section-wrap">
+    <div class="section-header sr">
+      <span class="section-eyebrow">Save The Date</span>
+      <h2 class="section-heading">Detail <em>Acara</em></h2>
+      <div class="section-rule"></div>
+      <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--text-soft);font-size:16px;margin-top:12px;">
+        Jumat, 29 Mei 2026
+      </p>
+    </div>
+    <div class="events-grid">
+      <div class="event-card sr-l d1">
+        <div class="event-icon-wrap">🕌</div>
+        <span class="event-type-tag">Ceremony</span>
+        <h3 class="event-title">Akad Nikah</h3>
+        <ul class="event-info-list">
+          <li class="event-info-item">
+            <span class="ev-icon">⏰</span>
+            <span>Pukul 13.00 WIB — Selesai</span>
+          </li>
+          <li class="event-info-item">
+            <span class="ev-icon">📍</span>
+            <span>Masjid At'taqwa, Joso Temboro<br>Kec. Karangtengah, Kab. Wonogiri<br>Jawa Tengah</span>
+          </li>
+          <li class="event-info-item">
+            <span class="ev-icon">📅</span>
+            <span>Jumat, 29 Mei 2026</span>
+          </li>
+        </ul>
+      </div>
+      <div class="event-card sr-r d2">
+        <div class="event-icon-wrap">🎊</div>
+        <span class="event-type-tag">Reception</span>
+        <h3 class="event-title">Resepsi</h3>
+        <ul class="event-info-list">
+          <li class="event-info-item">
+            <span class="ev-icon">⏰</span>
+            <span>Pukul 13.00 WIB — Selesai</span>
+          </li>
+          <li class="event-info-item">
+            <span class="ev-icon">📍</span>
+            <span>Masjid At'taqwa, Joso Temboro<br>Kec. Karangtengah, Kab. Wonogiri<br>Jawa Tengah</span>
+          </li>
+          <li class="event-info-item">
+            <span class="ev-icon">📅</span>
+            <span>Jumat, 29 Mei 2026</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MAP ===================== -->
+<section id="map-section">
+  <div class="map-header-wrap sr">
+    <span class="section-eyebrow">Lokasi Acara</span>
+    <h2 class="section-heading">Temukan <em>Kami</em></h2>
+    <div class="section-rule"></div>
+    <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--text-soft);font-size:15px;margin-top:12px;">
+      Masjid At'taqwa, Joso Temboro — Kec. Karangtengah, Kab. Wonogiri
+    </p>
+  </div>
+  <div class="map-embed-wrap">
+    <iframe
+      src="https://maps.google.com/maps?q=X3X9%2BWXC+Wonogiri+Jawa+Tengah&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Lokasi Masjid At'taqwa Joso Temboro Wonogiri">
+    </iframe>
+    <a
+      href="https://maps.google.com/?q=X3X9%2BWXC+Wonogiri+Jawa+Tengah"
+      target="_blank" rel="noopener noreferrer"
+      class="map-cta-btn">
+      Buka di Google Maps →
+    </a>
+  </div>
+</section>
+
+<!-- ===================== RSVP ===================== -->
+<section id="rsvp">
+  <div class="section-wrap">
+    <div class="section-header sr">
+      <span class="section-eyebrow">Konfirmasi Kehadiran</span>
+      <h2 class="section-heading"><em>RSVP</em></h2>
+      <div class="section-rule"></div>
+      <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--text-soft);font-size:15px;margin-top:12px;">
+        Mohon konfirmasi sebelum 25 Mei 2026
+      </p>
+    </div>
+    <div class="rsvp-card sr d1" id="rsvpCard">
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <div class="form-row2">
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap *</label>
+            <input class="form-control" type="text" id="rsvpName" placeholder="Nama Anda">
+          </div>
+          <div class="form-group">
+            <label class="form-label">No. WhatsApp</label>
+            <input class="form-control" type="tel" id="rsvpPhone" placeholder="08xx-xxxx-xxxx">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Jumlah Tamu</label>
+          <select class="form-control" id="rsvpCount">
+            <option value="1">1 orang</option>
+            <option value="2">2 orang</option>
+            <option value="3">3 orang</option>
+            <option value="4">4 orang</option>
+            <option value="5+">5+ orang</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Konfirmasi Kehadiran *</label>
+          <div class="attend-grid">
+            <div class="attend-chip on" id="chipHadir" data-v="hadir">✓ Hadir</div>
+            <div class="attend-chip" id="chipTidak" data-v="tidak">✕ Berhalangan</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pesan (opsional)</label>
+          <textarea class="form-control" id="rsvpMsg" placeholder="Sampaikan pesan untuk mempelai..."></textarea>
+        </div>
+        <button class="btn-primary" id="rsvpBtn">Kirim Konfirmasi ✦</button>
+      </div>
+    </div>
+    <div class="rsvp-thank" id="rsvpThanks">
+      <span class="ty-icon">🌸</span>
+      <p>Terima kasih!</p>
+      <small>Konfirmasi Anda telah kami terima.<br>Kami sangat menantikan kehadiran Anda.</small>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GIFT ===================== -->
+<section id="gift">
+  <div class="section-wrap">
+    <div class="section-header sr">
+      <span class="section-eyebrow">Wedding Gift</span>
+      <h2 class="section-heading">Amplop <em>Digital</em></h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="gift-note sr d1">
+      Doa dan kehadiran Anda adalah hadiah yang paling berarti bagi kami. 
+      Namun jika berkenan memberikan hadiah, silakan melalui rekening berikut:
+    </p>
+    <div class="gift-cards-grid">
+      <div class="gift-card sr-l d2">
+        <div class="copy-toast" id="toastBri">Disalin! ✓</div>
+        <div class="gift-bank-logo">BRI</div>
+        <div class="gift-acc-num" id="numBri">696101023616531</div>
+        <div class="gift-acc-name">a.n. Siti Rhohana</div>
+        <button class="copy-gift-btn" onclick="copyAcc('numBri','toastBri')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          Salin Nomor
+        </button>
+      </div>
+      <div class="gift-card sr-r d3">
+        <div class="copy-toast" id="toastJtg">Disalin! ✓</div>
+        <div class="gift-bank-logo" style="font-size:18px;">Bank Jateng</div>
+        <div class="gift-acc-num" id="numJtg">3110075919</div>
+        <div class="gift-acc-name">a.n. Airlangga Rahmadan<br>Nurbianto Putra</div>
+        <button class="copy-gift-btn" onclick="copyAcc('numJtg','toastJtg')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          Salin Nomor
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WISHES ===================== -->
+<section id="wishes">
+  <div class="section-wrap">
+    <div class="section-header sr">
+      <span class="section-eyebrow">Ucapan &amp; Doa</span>
+      <h2 class="section-heading">Pesan <em>Tamu</em></h2>
+      <div class="section-rule"></div>
+    </div>
+    <p class="wishes-lead sr d1">
+      Doa dan ucapan tulus dari kalian adalah hadiah terindah bagi kami. 
+      Silahkan tinggalkan pesan disini 💌
+    </p>
+    <div class="wish-form-wrap sr d2">
+      <input type="text" id="wishName" placeholder="Nama Anda" maxlength="60">
+      <textarea id="wishMsg" placeholder="Tuliskan ucapan dan doa untuk mempelai..." maxlength="320"></textarea>
+      <button class="btn-primary" id="wishBtn">Kirim Ucapan ✦</button>
+    </div>
+    <div class="wishes-feed" id="wishesFeed"></div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="ornament-line sr"><span class="gem">✦</span></div>
+    <div class="footer-names-big sr d1">Airlangga &amp; Siti</div>
+    <p class="footer-ayat sr d2">
+      "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan dari jenismu sendiri, supaya kamu merasa tenteram kepadanya."
+      <br><em style="font-size:11px;letter-spacing:2px">(Q.S. Ar-Rum: 21)</em>
+    </p>
+    <div class="ornament-line sr d3"><span class="gem">✦</span></div>
+    <p class="footer-date-line sr d4">
+      Jumat · 29 Mei 2026 · Masjid At'taqwa, Joso Temboro, Wonogiri
+    </p>
+    <p class="footer-credit">Made with love ✦ Airlangga &amp; Siti Wedding 2026</p>
+  </div>
+</footer>
+
+<!-- ===================== FIREBASE FIRESTORE ===================== -->
+<script type="module">
+  import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    query, orderBy, serverTimestamp, limit
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  /* ============================================================
+     🔧 KONFIGURASI FIREBASE
+     1. Buka https://console.firebase.google.com
+     2. Buat / pilih project → Settings ⚙️ → Project Settings
+     3. Scroll ke "Your apps" → klik "</>" → Register app
+     4. Salin nilai dari firebaseConfig dan isi di bawah
+     5. Aktifkan Firestore: Build → Firestore Database → Create
+     6. Set Rules ke:
+        rules_version = '2';
+        service cloud.firestore {
+          match /databases/{database}/documents {
+            match /wishes/{doc} {
+              allow read: if true;
+              allow create: if request.resource.data.name is string
+                            && request.resource.data.msg is string
+                            && request.resource.data.name.size() <= 80
+                            && request.resource.data.msg.size() <= 400;
+            }
+          }
+        }
+     ============================================================ */
+  const firebaseConfig = {
+    apiKey:            "GANTI_API_KEY",
+    authDomain:        "GANTI_AUTH_DOMAIN",
+    projectId:         "GANTI_PROJECT_ID",
+    storageBucket:     "GANTI_STORAGE_BUCKET",
+    messagingSenderId: "GANTI_SENDER_ID",
+    appId:             "GANTI_APP_ID"
+  };
+
+  /* ---- INIT ---- */
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const wishesCol = collection(db, "wishes");
+
+  /* ---- HELPERS ---- */
+  function esc(s){
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function formatTime(ts){
+    if(!ts) return 'Baru saja';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    const diff = Math.floor((Date.now() - d.getTime()) / 1000);
+    if(diff < 60)    return 'Baru saja';
+    if(diff < 3600)  return Math.floor(diff/60) + ' menit lalu';
+    if(diff < 86400) return Math.floor(diff/3600) + ' jam lalu';
+    return d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+  }
+
+  function buildCard(data, docId){
+    const card = document.createElement('div');
+    card.className = 'wish-item';
+    card.dataset.id = docId || '';
+    card.innerHTML =
+      '<div class="wish-meta">' +
+        '<div class="wish-ava">' + esc(data.name.charAt(0).toUpperCase()) + '</div>' +
+        '<span class="wish-author">' + esc(data.name) + '</span>' +
+        '<span class="wish-ts">'    + formatTime(data.createdAt) + '</span>' +
+      '</div>' +
+      '<p class="wish-msg">' + esc(data.msg) + '</p>';
+    return card;
+  }
+
+  /* ---- FEED STATE UI ---- */
+  const feed = document.getElementById('wishesFeed');
+
+  function setFeedState(state){
+    let el = document.getElementById('feed-state-el');
+    if(!el){
+      el = document.createElement('div');
+      el.id = 'feed-state-el';
+      el.style.cssText =
+        'text-align:center;padding:32px 16px;font-family:Playfair Display,serif;' +
+        'font-style:italic;font-size:15px;color:var(--taupe-pale);line-height:1.9;';
+      feed.before(el);
+    }
+    const states = {
+      loading: '🌸<br>Memuat ucapan...',
+      empty:   '💌<br>Belum ada ucapan.<br><small style="font-style:normal;font-size:11px;letter-spacing:1px">Jadilah yang pertama!</small>',
+      error:   '⚠️<br>Gagal memuat.<br><small style="font-style:normal;font-size:11px;color:var(--blush-deep)">Periksa konfigurasi Firebase Anda.</small>',
+    };
+    if(states[state]){ el.innerHTML = states[state]; el.style.display = 'block'; }
+    else              { el.style.display = 'none'; }
+  }
+
+  /* ---- REALTIME LISTENER ---- */
+  setFeedState('loading');
+  const q = query(wishesCol, orderBy('createdAt','desc'), limit(100));
+
+  onSnapshot(q,
+    (snap) => {
+      feed.innerHTML = '';
+      if(snap.empty){ setFeedState('empty'); return; }
+      setFeedState('none');
+      snap.forEach(doc => feed.appendChild(buildCard(doc.data(), doc.id)));
+    },
+    (err) => {
+      console.error('[Firestore]', err);
+      setFeedState('error');
+    }
+  );
+
+  /* ---- SUBMIT ---- */
+  document.getElementById('wishBtn').addEventListener('click', async function(){
+    const nameEl = document.getElementById('wishName');
+    const msgEl  = document.getElementById('wishMsg');
+    const name   = nameEl.value.trim();
+    const msg    = msgEl.value.trim();
+
+    if(!name || !msg){
+      alert('Mohon isi nama dan pesan Anda.');
+      return;
+    }
+
+    this.disabled    = true;
+    this.textContent = 'Mengirim...';
+
+    try {
+      await addDoc(wishesCol, {
+        name,
+        msg,
+        createdAt: serverTimestamp()
+      });
+      nameEl.value = '';
+      msgEl.value  = '';
+      this.textContent = '✓ Terkirim!';
+      /* scroll ke feed */
+      setTimeout(() => {
+        feed.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 300);
+      setTimeout(() => {
+        this.textContent = 'Kirim Ucapan ✦';
+        this.disabled = false;
+      }, 2500);
+    } catch(err){
+      console.error('[Firestore submit]', err);
+      alert('Gagal mengirim pesan. Pastikan konfigurasi Firebase sudah benar dan Firestore sudah diaktifkan.');
+      this.textContent = 'Kirim Ucapan ✦';
+      this.disabled = false;
+    }
+  });
+
+</script>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+/* ---- PETALS ---- */
+(function(){
+  const f = document.getElementById('petalField');
+  for(let i=0;i<14;i++){
+    const p = document.createElement('div');
+    p.className='fp';
+    const sz  = 6 + Math.random()*9;
+    const dur = 9  + Math.random()*9;
+    const del = Math.random()*14;
+    const dx  = (Math.random()-0.5)*140+'px';
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      width:${sz}px;height:${sz*1.5}px;
+      animation-duration:${dur}s;
+      animation-delay:${del}s;
+      --dx:${dx};
+      opacity:${0.15+Math.random()*0.3};
+      border-radius:${Math.random()>0.5?'50% 0':'0 50%'} 50% ${Math.random()>0.5?'0':'50%'};
+    `;
+    f.appendChild(p);
+  }
+  // Loading bg petals
+  const lp = document.getElementById('ldPetals');
+  const positions=[
+    {w:300,h:300,t:'-80px',l:'-80px',d:0.4},
+    {w:200,h:200,b:'-60px',r:'-60px',d:0.6},
+    {w:150,h:150,t:'40%',l:'-50px',d:0.8},
+    {w:180,h:180,t:'20%',r:'-50px',d:1},
+  ];
+  positions.forEach((pos,i)=>{
+    const el=document.createElement('div');
+    el.className='ld-petal';
+    el.style.cssText=`
+      width:${pos.w}px;height:${pos.h}px;
+      ${pos.t?'top:'+pos.t:''};
+      ${pos.b?'bottom:'+pos.b:''};
+      ${pos.l?'left:'+pos.l:''};
+      ${pos.r?'right:'+pos.r:''};
+      animation-delay:${pos.d}s;
+    `;
+    lp.appendChild(el);
+  });
+})();
+
+/* ---- LOADING ---- */
+window.addEventListener('load',function(){
+  setTimeout(()=>document.getElementById('loading').classList.add('out'), 2400);
+});
+
+/* ---- ENVELOPE ---- */
+const envWrap   = document.getElementById('envWrap');
+const envScreen = document.getElementById('envelope-screen');
+const envBtn    = document.getElementById('envOpenBtn');
+const bgAudio   = document.getElementById('bgAudio');
+
+function openEnvelope(){
+  envWrap.classList.add('opened');
+  setTimeout(()=>{
+    envScreen.classList.add('out');
+    bgAudio.play().catch(()=>{});
+    updateMusicUI(true);
+  }, 750);
+}
+envBtn.addEventListener('click', openEnvelope);
+envWrap.addEventListener('click', openEnvelope);
+
+/* ---- MUSIC ---- */
+const musicBtn  = document.getElementById('music-btn');
+const icPlay    = document.getElementById('icPlay');
+const icPause   = document.getElementById('icPause');
+
+function updateMusicUI(playing){
+  if(playing){
+    musicBtn.classList.add('spinning');
+    icPlay.style.display='none';
+    icPause.style.display='';
+  } else {
+    musicBtn.classList.remove('spinning');
+    icPlay.style.display='';
+    icPause.style.display='none';
+  }
+}
+musicBtn.addEventListener('click',function(){
+  if(bgAudio.paused){ bgAudio.play(); updateMusicUI(true); }
+  else               { bgAudio.pause(); updateMusicUI(false); }
+});
+
+/* ---- COUNTDOWN ---- */
+const wDate = new Date('2026-05-29T13:00:00+07:00');
+const pad   = n=>String(n).padStart(2,'0');
+
+function tick(){
+  const now  = new Date();
+  const diff = wDate - now;
+  if(diff<=0){
+    document.getElementById('cdGrid').style.display='none';
+    document.getElementById('cdDone').style.display='block';
+    return;
+  }
+  document.getElementById('cdD').textContent = pad(Math.floor(diff/86400000));
+  document.getElementById('cdH').textContent = pad(Math.floor(diff%86400000/3600000));
+  document.getElementById('cdM').textContent = pad(Math.floor(diff%3600000/60000));
+  document.getElementById('cdS').textContent = pad(Math.floor(diff%60000/1000));
+}
+tick(); setInterval(tick,1000);
+
+/* ---- SCROLL REVEAL ---- */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('up'); });
+},{threshold:0.1});
+document.querySelectorAll('.sr,.sr-l,.sr-r').forEach(el=>obs.observe(el));
+
+/* ---- RSVP ---- */
+let attending = 'hadir';
+document.getElementById('chipHadir').addEventListener('click',function(){
+  this.classList.add('on');
+  document.getElementById('chipTidak').classList.remove('on');
+  attending='hadir';
+});
+document.getElementById('chipTidak').addEventListener('click',function(){
+  this.classList.add('on');
+  document.getElementById('chipHadir').classList.remove('on');
+  attending='tidak';
+});
+document.getElementById('rsvpBtn').addEventListener('click',function(){
+  const name = document.getElementById('rsvpName').value.trim();
+  if(!name){ alert('Mohon isi nama lengkap Anda.'); return; }
+  this.disabled=true; this.textContent='Mengirim...';
+  setTimeout(()=>{
+    document.getElementById('rsvpCard').style.display='none';
+    document.getElementById('rsvpThanks').style.display='block';
+  },900);
+});
+
+/* ---- COPY ACCOUNT ---- */
+function copyAcc(elId, toastId){
+  const text    = document.getElementById(elId).textContent.trim();
+  const toast   = document.getElementById(toastId);
+  const showToast=()=>{ toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2200); };
+  if(navigator.clipboard){ navigator.clipboard.writeText(text).then(showToast).catch(showToast); }
+  else {
+    const t=document.createElement('input'); t.value=text;
+    document.body.appendChild(t); t.select(); document.execCommand('copy');
+    document.body.removeChild(t); showToast();
+  }
+}
+
+/* ---- WISHES: dikelola oleh Firebase module script di atas ---- */
+
+/* ---- PARALLAX HERO ---- */
+let ticking=false;
+window.addEventListener('scroll',function(){
+  if(!ticking){
+    requestAnimationFrame(()=>{
+      const y=window.scrollY;
+      if(y<window.innerHeight){
+        const b1=document.querySelector('.hero-blob-1');
+        const b2=document.querySelector('.hero-blob-2');
+        if(b1) b1.style.transform=`translateY(${y*0.2}px)`;
+        if(b2) b2.style.transform=`translateY(${-y*0.15}px)`;
+      }
+      ticking=false;
+    });
+    ticking=true;
+  }
+});
+</script>
+</body>
+</html>
